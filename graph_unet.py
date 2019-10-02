@@ -58,6 +58,7 @@ parser.add_argument('-c', '--use_cont_node_attr', action='store_true', default=F
 args = parser.parse_args()
 
 if args.torch_geom:
+    print('Pytorch Geometric is being used')
     from torch_geometric.datasets import TUDataset
     import torch_geometric.transforms as T
 
@@ -520,6 +521,17 @@ class GraphUnet(nn.Module):
 
     def forward(self, data):
         # data: [node_features, A, graph_support, N_nodes, label]
+        print('node_features',
+              data[0].shape,
+              'A',
+              data[1].shape,
+              'graph_support',
+              data[2].shape,
+              'N_nodes',
+              data[3].shape,
+              'labels',
+              data[4].shape)
+
         if self.shuffle_nodes:
             # shuffle nodes to make sure that the model does not adapt to nodes order (happens in some cases)
             N = data[0].shape[1]
