@@ -38,6 +38,7 @@ All hyperparameters are the same for the baseline GCN, Graph U-Net and Multigrap
 Implementation is very basic without much optimization, so that it is easier to debug and play around with the code.
 
 ```bash
+python graph_unet_dh.py --model unet --folds 2 --epochs 1 # to run dh's version of Graph UNet
 python graph_unet.py --model gcn  # to run baseline GCN
 python graph_unet.py --model unet  # to run Graph U-Net
 python graph_unet.py --model mgcn  # to run Multigraph GCN

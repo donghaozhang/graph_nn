@@ -20,6 +20,8 @@ from torch.utils.data import DataLoader
 from os.path import join as pjoin
 
 print('using torch', torch.__version__)
+# Default commandline for dh to understand code
+#
 
 # Experiment parameters
 parser = argparse.ArgumentParser(description='Graph Convolutional Networks')
@@ -837,6 +839,8 @@ else:
     loss_fn = F.cross_entropy
     predict_fn = lambda output: output.max(1, keepdim=True)[1].detach().cpu()
 
+print('args.degree', args.degree)
+print('args.dataset', args.dataset)
 if args.torch_geom:
     if args.degree:
         if args.dataset == 'TRIANGLES':
@@ -846,14 +850,15 @@ if args.torch_geom:
                                       'Try running without --torch_geom (-g) and look at dataset statistics printed out by our code.')
 
     if args.degree:
+        print('T.OneHotDegree is added')
         transforms.append(T.OneHotDegree(max_degree=max_degree, cat=False))
-
     dataset = TUDataset('./data/%s/' % args.dataset, name=args.dataset,
                         use_node_attr=args.use_cont_node_attr,
                         transform=T.Compose(transforms))
     train_ids, test_ids = split_ids(rnd_state.permutation(len(dataset)), folds=n_folds)
 
 else:
+    print('else condition is used')
     datareader = DataReader(data_dir='./data/%s/' % args.dataset,
                             rnd_state=rnd_state,
                             folds=n_folds,
